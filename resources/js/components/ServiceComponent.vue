@@ -33,16 +33,16 @@
                 <label for="category" >Цена услуги/товара</label>
                 <input type="number" class="form-control" v-model="service.price">
             </div>
-            <div class="form-group">
-                <label for="category" >фотография</label>
+<!--            <div class="form-group">-->
+<!--                <label for="category" >фотография</label>-->
 
-                <input style="opacity: 1"
-                       ref="fileInput"
-                       type="file"
-                       accept="image/*"
-                       @change="onImageSelect"
-                       >
-            </div>
+<!--                <input style="opacity: 1"-->
+<!--                       ref="fileInput"-->
+<!--                       type="file"-->
+<!--                       accept="image/*"-->
+<!--                       @change="onImageSelect"-->
+<!--                       >-->
+<!--            </div>-->
 
             <div class="form-group d-flex justify-content-end">
                 <button class="btn btn-success " @click="createService" >Создать</button>
@@ -61,7 +61,7 @@
                         <table class="table tablesorter " id="">
                             <thead class=" text-primary">
                             <tr>
-                                <th>Фото</th>
+<!--                                <th>Фото</th>-->
                                 <th>Категория</th>
                                 <th>Названия услуги</th>
                                 <th class="text-center">Цена</th>
@@ -70,7 +70,7 @@
                             </thead>
                             <tbody>
                             <tr v-for="service in services">
-                                <td><img :src="'/storage'+service.image" width="100"  ></td>
+<!--                                <td><img :src="'/storage'+service.image" width="100"  ></td>-->
                                 <td>{{service.category ? service.category.name : '-'}}</td>
                                 <td>{{ service.name ?? "-" }}</td>
                                 <td class="text-center">{{service.price ?? "-" }} Tг</td>
@@ -173,7 +173,6 @@
                             this.service.image = null
                             this.previewImage = null
                             this.$refs.fileInput.value = null
-                            this.getServicesList()
                         }
                     }).catch((error) => {
                     if (error.response.status === 422){
@@ -185,6 +184,7 @@
 
                     }
                 })
+                this.getServicesList()
             },
 
             deleteService(id){

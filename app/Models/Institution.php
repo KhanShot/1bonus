@@ -15,10 +15,15 @@ class Institution extends Model
         'bg_image',
     ];
     public function phones(){
-        return $this->hasMany(InstitutionPhones::class, 'institution_id');
+        return $this->hasOne(InstitutionPhones::class, 'institution_id');
     }
     public function address(){
         return $this->hasOne(InstitutionAddress::class, 'institution_id');
+    }
+
+    public function userCity()
+    {
+        return $this->address()->where('city_id', auth()->user()->city_id)->pluck('institution_id');
     }
 
     public function owner(){
@@ -27,5 +32,21 @@ class Institution extends Model
 
     public function category(){
         return $this->belongsTo(Categories::class, 'category_id');
+    }
+
+    public function services_category(){
+        return $this->hasMany(ServiceCategories::class,'institution_id');
+    }
+
+    public function schedule(){
+        return $this->hasMany(InstitutionSchedule::class, 'institution_id');
+    }
+
+    public function rating(){
+        return $this->hasMany(Rating::class, 'institution_id');
+    }
+
+    public function tags(){
+        return $this->belongsToMany(Tags::class,'institution_tags', 'institution_id', 'tag_id');
     }
 }

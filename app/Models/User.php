@@ -22,10 +22,11 @@ class User extends Authenticatable
         'surname',
         'gender',
         'image',
+        'city_id',
         'socialite',
         'socialite_id',
         'birthday',
-        'family_status',
+        'married',
         'phone_verified_at',
         'email',
         'phone',
@@ -51,4 +52,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function city(){
+        return $this->belongsTo(Cities::class,'city_id');
+    }
 }

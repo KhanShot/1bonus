@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('cities', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('color')->nullable();
-            $table->integer('order')->nullable();
+            $table->string('lat')->nullable();
+            $table->string('long')->nullable();
+            $table->integer('zoomLevel')->nullable();
         });
     }
 
@@ -30,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('cities');
     }
 };

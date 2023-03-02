@@ -13,7 +13,9 @@ class Tags extends Model
         'name', 'order', 'image',
     ];
 
-    public function institution(){
-        return $this->hasManyThrough(Institution::class, InstitutionTags::class,'institution_id', 'id','id','tag_id');
+    public function institution(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Institution::class, 'institution_tags', 'tag_id' , 'institution_id');
     }
+
 }

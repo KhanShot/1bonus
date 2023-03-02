@@ -47,10 +47,20 @@
                                         @include('alerts.feedback', ['field' => 'image'])
                                     </div>
 
+{{--                                    <div class="form-group">--}}
+{{--                                        <label for="name">Лого {!!  $institution ? '<a href="/storage'. $institution->logo .'" target="_blank"> открыть </a>' : '' !!}</label>--}}
+{{--                                        <input type="file" accept="image/*" name="logo" class="form-control{{ $errors->has('logo') ? ' is-invalid' : '' }}">--}}
+{{--                                        @include('alerts.feedback', ['field' => 'logo'])--}}
+{{--                                    </div>--}}
+
                                     <div class="form-group">
-                                        <label for="name">Лого {!!  $institution ? '<a href="/storage'. $institution->logo .'" target="_blank"> открыть </a>' : '' !!}</label>
-                                        <input type="file" accept="image/*" name="logo" class="form-control{{ $errors->has('logo') ? ' is-invalid' : '' }}">
-                                        @include('alerts.feedback', ['field' => 'logo'])
+                                        <label for="city_id">Город</label>
+                                        <select name="city_id" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}">
+                                            @foreach($cities as $city)
+                                                <option value="{{$city->id}}">{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @include('alerts.feedback', ['field' => 'city_id'])
                                     </div>
 
                                     <div class="form-group">
@@ -71,7 +81,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Телефон номер</label>
-                                        <input type="text" name="phone" id="wash-phone" value="{{ $institution->phones[0]->phone ?? old('phone')}}" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}">
+                                        <input type="text" name="phone" id="wash-phone" value="{{ $institution->phones->phone ?? old('phone')}}" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}">
                                         @include('alerts.feedback', ['field' => 'phone'])
                                     </div>
 
@@ -154,11 +164,11 @@
         new MultiSelectTag('multiselectTag')
         let phoneMask = IMask(
             document.getElementById('wash-phone'), {
-                mask: '+{7}(000)000-00-00'
+                mask: '+{996}(000)000-00-00'
             });
         let phoneMaskWhatsApp = IMask(
             document.getElementById('wash-phone-whatsApp'), {
-                mask: '{7}7000000000'
+                mask: '{996}7000000000'
             });
     </script>
 
@@ -170,7 +180,7 @@
                 let  myInput = document.getElementById("address"),
                     myPlacemark,
                     myMap = new ymaps.Map('map', {
-                        center: [43.237288506741315, 76.92540025903315],
+                        center: [42.882004, 74.582748],
                         zoom: 13,
                         controls: []
                     });

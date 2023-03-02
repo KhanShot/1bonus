@@ -64,8 +64,8 @@
                             <label for="city">Семейное положение</label>
                             <select class="form-control" name="city">
                                 <option value="">Выберите положение</option>
-                                <option value="married">Женат/Замужем</option>
-                                <option value="not_married">Не женат/Не замужем </option>
+                                <option value="1">Женат/Замужем</option>
+                                <option value="0">Не женат/Не замужем </option>
                             </select>
                         </div>
                     </div>

@@ -5,8 +5,8 @@
 
     <!-- Page Heading -->
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="h3 mb-4 text-gray-800">Категории</h1>
-        <a href="{{route('admin.categories.create')}}" class="btn btn-success"><i class="fa fa-plus"></i></a>
+        <h1 class="h3 mb-4 text-gray-800">Города</h1>
+        <a href="{{route('admin.cities.create')}}" class="btn btn-success"><i class="fa fa-plus"></i></a>
     </div>
     @include('layouts.alert')
     <!-- Tags -->
@@ -17,24 +17,24 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>Фото</th>
+                        <th>Координаты</th>
                         <th>Название</th>
-                        <th>Цвет</th>
                         <th>Количество заведений</th>
+                        <th>Количество пользвателей</th>
                         <th>Действия</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($categories as $category)
+                    @foreach($cities as $city)
                         <tr>
-                            <td>{{$category->id}}</td>
-                            <td><img src="{{asset('/storage'.$category->image)}}" width="80" alt=""> </td>
-                            <td>{{$category->name ?? "-" }}</td>
-                            <td><span class="card w-25 h-25" style="background: {{$category->color ?? 'black'}}">&nbsp;</span></td>
-                            <td>{{ $category->institution_count }}</td>
+                            <td>{{$city->id}}</td>
+                            <td>[{{$city->lat .' , '. $city->long}}]</td>
+                            <td>{{$city->name ?? "-" }}</td>
+                            <td>{{$city->institution_count}}</td>
+                            <td>{{ $city->user_count }}</td>
                             <td class="d-flex">
-                                <a class="btn btn-warning mr-2" href="{{route('admin.categories.edit', $category->id)}}"><i class="fa fa-edit"></i></a>
-                                <form action="{{route('admin.categories.delete', $category->id)}}" method="post">@csrf @method('delete')
+                                <a class="btn btn-warning mr-2" href="{{route('admin.cities.edit', $city->id)}}"><i class="fa fa-edit"></i></a>
+                                <form action="{{route('admin.cities.delete', $city->id)}}" onsubmit="return confirm('Вы действительно хотите удалить этот город ?');" method="post">@csrf @method('delete')
                                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>

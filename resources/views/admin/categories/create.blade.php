@@ -23,9 +23,15 @@
                         <label for="description">Описание</label>
                         <textarea name="description" id="description" class="form-control" cols="30" rows="5"></textarea>
                     </div>
-                    <div class="form-group col-md-5 mt-4">
-                        <label for="image">Фото</label>
-                        <input type="file" accept="image/*" class="form-control-file" required name="image" id="image" style="opacity: 1">
+                    <div class="row d-flex container-fluid">
+                        <div class="form-group d-flex mt-4">
+                            <label for="image">Фото</label>
+                            <input type="file" accept="image/*" class="form-control-file ml-2" required name="image" id="image" style="opacity: 1">
+                        </div>
+                        <div class="form-group mt-4 d-flex flex-row">
+                            <label for="color">Цвет</label>
+                            <input type="color" class="form-control-color ml-2" required name="color" id="color">
+                        </div>
                     </div>
                     <div class="form-group col-md-5 mt-4 d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Сохранить</button>

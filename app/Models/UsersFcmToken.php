@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class UsersFcmToken extends Model
 {
     use HasFactory;
+    public $timestamps = false;
+    protected $fillable = [
+        'token', 'user_id'
+    ];
 }

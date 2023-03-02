@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\InstitutionStoreRequest;
 use App\Http\Requests\Admin\InstitutionUpdateRequest;
 use App\Http\Traits\Utils;
 use App\Models\Categories;
+use App\Models\Cities;
 use App\Models\Institution;
 use App\Models\InstitutionAddress;
 use App\Models\InstitutionPhones;
@@ -22,11 +23,14 @@ class InstitutionController extends Controller
 //        dd($institution);
         $tags = Tags::query()->get();
         $categories = Categories::query()->get();
-        return view('partner.institution.index', compact('institution', 'tags', 'categories'));
+        $cities = Cities::query()->get();
+        return view('partner.institution.index', compact('institution',
+            'tags', 'categories', 'cities'));
     }
 
     public function store(InstitutionStoreRequest $request){
-        $data = $request->validated();
+        $data = $request->all();
+//        dd($data);
         if ($request->hasFile("image")){
             $path = "/assets/institution";
             $request->file("image")->store('public'. $path);
@@ -44,7 +48,7 @@ class InstitutionController extends Controller
             'name' => $data['name'],
             'description' => $data['description'],
             'image' => $data['image'],
-            'logo' => $data['logo'],
+            'logo' => $data['logo'] ?? null,
             'category_id' => $data['category'],
             'insta' => $data['insta'] ?? '',
             'telegram' => $data['telegram'] ?? '',
@@ -60,6 +64,7 @@ class InstitutionController extends Controller
             'long' => $request->get('long'),
             'lat' => $request->get('lat'),
             'city' => $request->get('city'),
+            'city_id' => $request->get('city_id'),
             'street' => $request->get('street'),
             'premiseNumber' => $request->get('premiseNumber'),
         );
@@ -112,7 +117,10 @@ class InstitutionController extends Controller
             'lat' => $request->get("lat"),
             'long' => $request->get("long")
         );
-        InstitutionAddress::query()->update($address);
+
+        InstitutionAddress::query()->where('institution_id', $institution_id)->delete();
+
+        InstitutionAddress::query()->create($address);
 
         InstitutionPhones::query()->where("institution_id", $institution->id)->delete();
 

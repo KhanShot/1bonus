@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'phone' => '9967472974768',
             'type' => 'user',
             'gender' => 'm',
-            'family_status' => 'married',
+            'married' => true,
             'birthday' => '1999-01-24',
 //            'email_verified_at' => now(),
             'phone_verified_at' => now(),

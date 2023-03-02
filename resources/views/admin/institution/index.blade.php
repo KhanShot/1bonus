@@ -33,11 +33,21 @@
                             <td>{{$institution->category ? $institution->category->name : '-' }}</td>
                             <td>{{$institution->owner ? $institution->owner->name : '-' }}</td>
                             <td>{{$institution->address ? $institution->address->city : '-' }}</td>
-                            <td class="d-flex justify-content-around pl-4 pr-4">@if($institution->insta)<div><a target="_blank" href="https://www.instagram.com/{{$institution->insta}}"><i class="fa-brands fa-instagram"></i></a></div>@endif
+                            <td class="d-flex justify-content-around pl-4 pr-4">@if($institution->insta)<div><a target="_blank" href="{{$institution->insta}}"><i class="fa-brands fa-instagram"></i></a></div>@endif
                                 @if($institution->telegram)<div><a target="_blank" href="https://t.me/{{$institution->telegram}}"><i class="fa-brands fa-telegram"></i></a></div>@endif
                                 @if($institution->whatsapp)<div><a target="_blank" href="https://wa.me/{{$institution->whatsapp}}"><i class="fa-brands fa-whatsapp"></i></a></div>@endif</td>
                             <td>{{$institution->created_at }}</td>
-                            <td>{{$institution->tags }}</td>
+                            <td>
+                                <?php $i = 0; ?>
+
+                                @foreach($institution->tags as $tag)
+                                    {{ $tag->name }}
+                                    @if(++$i == count($institution->tags))
+                                    @else
+                                        ,
+                                    @endif
+                                @endforeach
+                            </td>
 
                             <td class="d-flex">
                                 <a class="btn btn-warning mr-2" href="{{route('admin.institutions.edit', $institution->id)}}"><i class="fa fa-edit"></i></a>
@@ -58,8 +68,16 @@
                                                     @csrf
                                                     <input type="hidden" name="institution_id" value="{{$institution->id}}">
                                                     @foreach($tags as $tag)
+
                                                     <div class="form-group">
-                                                        <input type="checkbox" name="tags[]" value="{{$tag->id}}" class="custom-checkbox" id="tag_{{$institution->id}}_{{$tag->id}}">
+                                                        <input type="checkbox" name="tags[]" value="{{$tag->id}}"
+                                                               @if(count($tag->institution) > 0)
+                                                                   @foreach($tag->institution as $tins)
+                                                                       @if($institution->id == $tins->id) checked @endif
+                                                                   @endforeach
+                                                               @endif
+
+                                                               class="custom-checkbox" id="tag_{{$institution->id}}_{{$tag->id}}">
                                                         <label for="tag_{{$institution->id}}_{{$tag->id}}">{{$tag->name}}</label>
                                                     </div>
                                                     @endforeach

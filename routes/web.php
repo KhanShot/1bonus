@@ -27,7 +27,7 @@ Route::prefix('partner')->middleware(['auth'])->group(function (){
 
     //institution
     Route::get('institution', [\App\Http\Controllers\Partner\InstitutionController::class, 'index'])->name('partner.institution');
-    Route::post('institution/update/{institution_id}', [\App\Http\Controllers\Partner\InstitutionController::class, 'upd ate'])->name('partner.institution.update');
+    Route::post('institution/update/{institution_id}', [\App\Http\Controllers\Partner\InstitutionController::class, 'update'])->name('partner.institution.update');
     Route::post('institution/store', [\App\Http\Controllers\Partner\InstitutionController::class, 'store'])->name('partner.institution.store');
 
     //schedule
@@ -90,6 +90,17 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (){
     Route::post('tags/update/{tag_id}',[\App\Http\Controllers\Admin\TagsController::class, 'update'])->name('admin.tags.update');
     Route::post('tags/update-main/{tag_id}',[\App\Http\Controllers\Admin\TagsController::class, 'updateMain'])->name('admin.tags.updateMain');
     Route::delete('tags/delete/{tag_id}', [\App\Http\Controllers\Admin\TagsController::class, 'delete'])->name('admin.tags.delete');
+
+    //cities
+
+    Route::prefix('cities')->group(function (){
+        Route::get('',[\App\Http\Controllers\Admin\CitiesController::class,'index'])->name('admin.cities');
+        Route::get('create',[\App\Http\Controllers\Admin\CitiesController::class,'create'])->name('admin.cities.create');
+        Route::post('store',[\App\Http\Controllers\Admin\CitiesController::class,'store'])->name('admin.cities.store');
+        Route::get('edit/{city_id}',[\App\Http\Controllers\Admin\CitiesController::class,'edit'])->name('admin.cities.edit');
+        Route::post('update/{city_id}',[\App\Http\Controllers\Admin\CitiesController::class,'update'])->name('admin.cities.update');
+        Route::delete('delete/{city_id}',[\App\Http\Controllers\Admin\CitiesController::class,'delete'])->name('admin.cities.delete');
+    });
 
     Route::get('sms', [\App\Http\Controllers\Admin\SMSController::class,'index'])->name('admin.sms');
 

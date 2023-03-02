@@ -27,7 +27,7 @@ class InstitutionStoreRequest extends FormRequest
             "name" => 'required',
             'description' => 'string',
             'image' => 'required|image',
-            'logo' => 'required|image',
+//            'logo' => 'required|image',
             'phone' => "required",
             'full_address' => 'required',
             'lat' => 'required',
@@ -36,6 +36,7 @@ class InstitutionStoreRequest extends FormRequest
             'long' => 'required',
             'premiseNumber' => 'required',
             'street' => 'required',
+            'city_id' => 'required'
         ];
     }
 }

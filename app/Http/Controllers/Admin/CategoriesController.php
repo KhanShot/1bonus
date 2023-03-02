@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\Storage;
 class CategoriesController extends Controller
 {
     public function index(){
-        $categories = Categories::query()->get();
+        $categories = Categories::query()
+            ->withCount('institution')
+            ->get();
         return view('admin.categories.index', compact('categories'));
     }
 
@@ -28,6 +30,7 @@ class CategoriesController extends Controller
     public function store(Request $request){
         $data = array(
             'name' => $request->get('name'),
+            'color' => $request->get('color'),
             'description' => $request->get('description'),
         );
         if ($request->hasFile("image")){
@@ -48,6 +51,7 @@ class CategoriesController extends Controller
             return redirect()->route('admin.categories')->with('error', Utils::$MESSAGE_DATA_NOT_FOUND);
         $data = array(
             'name' => $request->get('name'),
+            'color' => $request->get('color'),
             'description' => $request->get('description'),
         );
         if ($request->hasFile("image")){

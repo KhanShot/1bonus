@@ -6,16 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\Utils;
 use App\Models\Categories;
 use App\Models\Institution;
+use App\Models\InstitutionTags;
 use App\Models\Tags;
 use Illuminate\Http\Request;
 
 class InstitutionController extends Controller
 {
     public function index(){
-        $institutions = Institution::with(['address', 'category', 'owner'])->get();
+        $institutions = Institution::with(['address', 'category', 'owner', 'tags'])->get();
         $tags = Tags::with(['institution'])->get();
-
-//        dd($tags);
         return view('admin.institution.index', compact('institutions', 'tags'));
     }
 
@@ -34,7 +33,20 @@ class InstitutionController extends Controller
     }
 
     public function addTag(Request $request){
-        return $request->all();
+
+        InstitutionTags::query()->where('institution_id', $request->get('institution_id'))->delete();
+
+
+        if ($request->has('tags')){
+            foreach ($request->get('tags') as $tag){
+                InstitutionTags::query()->create([
+                    'institution_id' => $request->get('institution_id'),
+                    'tag_id' => $tag
+                ]);
+            }
+        }
+
+        return back()->with('success', Utils::$MESSAGE_SUCCESS_UPDATED);
     }
 
 }

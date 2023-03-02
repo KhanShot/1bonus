@@ -20,11 +20,14 @@ return new class extends Migration
             $table->string('email')->nullable()->unique();
             $table->string('phone')->nullable()->unique();
             $table->string('gender')->nullable();
+            $table->unsignedBigInteger("city_id")->nullable();
+            $table->foreign('city_id')->references('id')
+                ->on('cities')->cascadeOnDelete();
             $table->string('image')->nullable();
             $table->string('socialite')->nullable();
             $table->string('socialite_id')->nullable();
             $table->date('birthday')->nullable();
-            $table->string('family_status')->nullable();
+            $table->boolean('married')->nullable();
             $table->string('type')->nullable()->default('user');
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();

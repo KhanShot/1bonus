@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Categories extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'description', 'image', 'order'];
+    protected $fillable = ['name', 'description', 'image', 'order', 'color'];
     public $timestamps = false;
 
     public function institution(){

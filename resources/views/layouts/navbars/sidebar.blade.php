@@ -55,6 +55,12 @@
         </a>
     </li>
 
+    <li class="nav-item @if ( request()->route()->getName() == 'admin.cities' ) active @endif">
+        <a class="nav-link text-gray-700" href="{{ route('admin.cities')  }}">
+            <i class="fas fa-fw fa-city text-gray-700"></i>
+            <span>Город</span>
+        </a>
+    </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item @if ( request()->route()->getName() == 'admin.sms' ) active @endif">

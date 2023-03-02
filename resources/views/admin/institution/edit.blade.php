@@ -74,7 +74,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Телефон номер</label>
-                                        <input type="text" name="phone" id="wash-phone" value="{{ $institution->phones[0]->phone ?? old('phone')}}" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}">
+                                        <input type="text" name="phone" id="wash-phone" value="{{ $institution->phones->phone ?? old('phone')}}" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}">
                                         @include('alerts.feedback', ['field' => 'phone'])
                                     </div>
 

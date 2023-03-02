@@ -39,6 +39,12 @@
                             <img src="{{asset('storage'.$category->image)}}" width="400" height="250" alt="">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="form-group mt-4 d-flex flex-row">
+                            <label for="color">Цвет</label>
+                            <input type="color" class="form-control-color ml-2" required name="color" id="color">
+                        </div>
+                    </div>
 
                     <div class="form-group col-md-5 mt-4 d-flex justify-content-end">
                         <button type="submit" class="btn btn-success">Сохранить</button>

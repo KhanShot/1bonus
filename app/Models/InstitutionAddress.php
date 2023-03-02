@@ -11,7 +11,7 @@ class InstitutionAddress extends Model
     use HasFactory; // TODO change syntax
     protected $fillable = [
         'institution_id', 'lat', 'long', 'city',
-        'full_address', 'premiseNumber', 'street',
+        'full_address', 'premiseNumber', 'street', 'city_id'
     ];
 
     public $timestamps = false;

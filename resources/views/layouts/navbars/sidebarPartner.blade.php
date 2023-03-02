@@ -57,6 +57,27 @@
         </a>
     </li>
 
+    <li class="mb-5">
+
+    </li>
+    <div class="card bg-danger p-2 text-white">
+        <div class="card-title">
+            <small style="line-height: 1.2; font-size: 13px;  ">
+                Для того чтобы ваше заведение отобразилось в 1Bonus добавьте следующую информацию:
+            </small>
+        </div>
+        <hr>
+        <div class="">
+            <small>
+                <li><a class="text-decoration-none text-white" href="#">Карточка посещения</a> </li>
+                <li><a class="text-decoration-none text-white" href="#">Услуги</a></li>
+                <li>
+                    <s><a class="text-decoration-none text-white" href="#">График работы</a></s>
+                </li>
+            </small>
+
+        </div>
+    </div>
 
 
 

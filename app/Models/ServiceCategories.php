@@ -13,4 +13,8 @@ class ServiceCategories extends Model
     protected $fillable = [
         'name', 'institution_id'
     ];
+
+    public function services(){
+        return $this->hasMany(Service::class, 'service_category_id');
+    }
 }
