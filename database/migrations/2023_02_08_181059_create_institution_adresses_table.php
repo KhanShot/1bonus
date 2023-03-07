@@ -18,7 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger("institution_id");
             $table->foreign('institution_id')->references('id')
                 ->on('institutions')->cascadeOnDelete();
-
+            $table->unsignedBigInteger("city_id")->nullable();
+            $table->foreign('city_id')->references('id')
+                ->on('cities')->cascadeOnDelete();
             $table->string("full_address");
             $table->string("city");
             $table->string("long");
