@@ -28,6 +28,7 @@ return new class extends Migration
                 ->on('users')->cascadeOnDelete();
             $table->dateTime("time_used")->nullable();
             $table->boolean("used")->nullable()->default(0);
+            $table->boolean("is_finished")->nullable()->default(0);
             $table->timestamps();
         });
     }

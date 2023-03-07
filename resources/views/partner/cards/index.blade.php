@@ -27,23 +27,32 @@
                 @foreach($institutionCards as $key => $cards)
                     <div class="mt-5">
                         <div class="heading mt-2 d-flex">
-                            <div>Карта: {{$key}}</div>
+                            <div>
+                                <div>Карта: {{$key}}</div>
+                                <div>Дата: {{$cards[0]->created_at}}</div>
+                            </div>
+
                             <div class="ml-5">
-                                <form action="{{route('partner.cards.delete', $key)}}" method="POST" onsubmit="return confirm('Вы действительно хотите удалить карточку посещение?');"> @csrf @method('delete')
+                                <form
+                                      @if($cards[0]->deleted_at) action="{{route('partner.cards.forceDelete', $key)}}" @else action="{{route('partner.cards.delete', $key)}}" @endif
+                                      method="POST" onsubmit="return confirm('Вы действительно хотите удалить карточку посещение?');"> @csrf @method('delete')
                                     <button class="bg-transparent border-0" style="color: #4e73df" type="submit"><i class="fa fa-trash"></i></button>
-                                </form></div>
+                                </form>
+                            </div>
                         </div>
                         <div class="mt-3">
                             @foreach($cards as $card)
-                                <div class=' c-card p-2 d-inline-block mb-2 mr-2 text-center'>
+                                <div class='c-card p-2 d-inline-block mb-2 mr-2 text-center @if($card->deleted_at)bg-gray-600 @endif'>
                                     <div class="text-white"> {{$card->visit}}</div>
                                     <div class="text-white" style="">{{$card->bonus_name ?? "-"}}</div>
                                 </div>
                             @endforeach
                         </div>
+                        @if($loop->first)
+                            <hr>
+                        @endif
                     </div>
                 @endforeach
-                <hr>
             </div>
 
 

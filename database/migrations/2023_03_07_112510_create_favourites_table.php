@@ -13,19 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cards', function (Blueprint $table) {
+        Schema::create('favourites', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("user_id")->nullable();
+            $table->foreign('user_id')->references('id')
+                ->on('users')->cascadeOnDelete();
+
             $table->unsignedBigInteger("institution_id")->nullable();
             $table->foreign('institution_id')->references('id')
                 ->on('institutions')->cascadeOnDelete();
-
-            $table->string("bonus_name")->nullable();
-
-            $table->integer("visit")->nullable();
-            $table->string("group")->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-
         });
     }
 
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cards');
+        Schema::dropIfExists('favourites');
     }
 };

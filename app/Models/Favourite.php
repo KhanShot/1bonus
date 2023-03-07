@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cards extends Model
+class Favourite extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    public $timestamps = false;
 
     protected $fillable = [
-        'institution_id', 'bonus_name', 'visit', 'group',
+        'user_id', 'institution_id'
     ];
 }

@@ -4,13 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Cards extends Model
+class SmsCodes extends Model
 {
-    use HasFactory, SoftDeletes;
-
+    use HasFactory;
     protected $fillable = [
-        'institution_id', 'bonus_name', 'visit', 'group',
+        'code', 'phone', 'user_id','service_sms_id',
+        'type', 'status','reason', 'verified', 'password'
     ];
 }

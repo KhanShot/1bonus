@@ -19,8 +19,10 @@ class CardsController extends Controller
         if (!$institution)
             return redirect()->route('partner.institution');
 
-        $institutionCards = Cards::query()->where('institution_id', $institution->id)
-        ->get()->groupBy('group');
+        $institutionCards = Cards::query()
+            ->withTrashed()
+            ->where('institution_id', $institution->id)
+        ->get()->sortBy('deleted_at')->groupBy('group');
 
         return view('partner.cards.index', compact('institutionCards', 'institution'));
     }
@@ -59,5 +61,11 @@ class CardsController extends Controller
     public function delete($group){
         Cards::query()->where("group", $group)->delete();
         return back()->with("success", Utils::$MESSAGE_SUCCESS_DELETED);
+    }
+
+    public function forceDelete($group){
+        Cards::query()->where("group", $group)->forceDelete();
+        return back()->with("success", Utils::$MESSAGE_SUCCESS_DELETED);
+
     }
 }

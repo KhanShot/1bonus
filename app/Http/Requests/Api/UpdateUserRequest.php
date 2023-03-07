@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'surname' => 'string|required',
             'birthday' => 'date|required',
             'gender' => 'required',
-            'family_status' => 'required',
+            'married' => 'required',
             'city' => 'required|exists:cities,id',
             'email' => 'email|unique:users,email,'. $this->user()->id,
         ];

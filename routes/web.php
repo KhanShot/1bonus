@@ -24,6 +24,7 @@ Auth::routes();
 
 Route::prefix('partner')->middleware(['auth'])->group(function (){
     Route::get('dashboard', [\App\Http\Controllers\Partner\PartnerController::class, 'dashboard'])->name('partner.index');
+    Route::get('filling', [\App\Http\Controllers\Partner\PartnerController::class, 'filling'])->name('partner.filling');
 
     //institution
     Route::get('institution', [\App\Http\Controllers\Partner\InstitutionController::class, 'index'])->name('partner.institution');
@@ -40,6 +41,7 @@ Route::prefix('partner')->middleware(['auth'])->group(function (){
     Route::get('cards/create', [\App\Http\Controllers\Partner\CardsController::class, 'create' ])->name('partner.cards.create');
     Route::post('cards/store/{institution_id}', [\App\Http\Controllers\Partner\CardsController::class, 'store' ])->name('partner.cards.store');
     Route::delete('cards/delete/{group}', [\App\Http\Controllers\Partner\CardsController::class, 'delete'])->name('partner.cards.delete');
+    Route::delete('cards/delete-force/{group}', [\App\Http\Controllers\Partner\CardsController::class, 'forceDelete'])->name('partner.cards.forceDelete');
 
     Route::get('services', [\App\Http\Controllers\Partner\ServiceController::class, 'index'])->name('partner.services');
     Route::get('services/get-list/{institution_id}', [\App\Http\Controllers\Partner\ServiceController::class, 'getList']);
@@ -66,7 +68,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function (){
 
     Route::get('users', [\App\Http\Controllers\Admin\UsersController::class,'index'])->name('admin.users');
     Route::get('users/create', [\App\Http\Controllers\Admin\UsersController::class,'create'])->name('admin.users.create');
-
+    Route::get('users/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('admin.notification');
+    Route::post('users/notifications/send', [\App\Http\Controllers\Admin\NotificationController::class, 'send'])->name('admin.notification.send');
 
     Route::get('institutions', [\App\Http\Controllers\Admin\InstitutionController::class,'index'])->name('admin.institutions');
     Route::get('institutions/edit/{ins_id}', [\App\Http\Controllers\Admin\InstitutionController::class,'edit'])->name('admin.institutions.edit');

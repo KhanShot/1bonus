@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api;
 use App\Http\Traits\TJsonResponse;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginRequest extends FormRequest
+class PastRatingRequest extends FormRequest
 {
     use TJsonResponse;
     /**
@@ -26,9 +26,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|regex:/(9\d{11})/|numeric|exists:users,phone',
-            'password' => 'required|string|min:5',
-            'fcm_token' => 'required|string',
+            'institution_id' => 'required|exists:institutions,id',
+            'point' => 'required',
         ];
     }
 }

@@ -56,4 +56,8 @@ class User extends Authenticatable
     public function city(){
         return $this->belongsTo(Cities::class,'city_id');
     }
+
+    public function fcm(){
+        return $this->hasOne(UsersFcmToken::class, 'user_id');
+    }
 }

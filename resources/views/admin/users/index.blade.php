@@ -15,45 +15,44 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Город</label>
+                            <label for="city">Город </label>
                             <select class="form-control" name="city">
                                 <option value="">Выберите город</option>
                                 @foreach($cities as $city)
-                                    <option>{{$city}}</option>
+                                    <option @if(request()->city == $city->id) selected @endif value="{{$city->id}}">{{$city->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Категория</label>
+                            <label for="category">Категория</label>
                             <select class="form-control" name="category">
                                 <option value="">Выберите категорию</option>
                                 @foreach($categories as $category)
-                                    <option>{{$category->name}}</option>
+                                    <option @if(request()->category == $category->id) selected @endif value="{{$category->id}}" >{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Заведения</label>
+                            <label for="institution">Заведения</label>
                             <select class="form-control" name="institution">
                                 <option value="">Выберите заведение</option>
                                 @foreach($institutions as $institution)
-
-                                    <option>{{$institution->name}}</option>
+                                    <option value="{{$institution->id}}" @if(request()->institution == $institution->id) selected @endif >{{$institution->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Пол</label>
+                            <label for="gender">Пол</label>
                             <select class="form-control" name="gender">
-                                <option>Выберите пол</option>
-                                <option>Мужской</option>
-                                <option>Женский</option>
+                                <option value="">Выберите пол</option>
+                                <option value="m" @if(request()->gender == 'm') selected @endif >Мужской</option>
+                                <option value="f" @if(request()->gender == 'f') selected @endif>Женский</option>
                             </select>
                         </div>
                     </div>
@@ -61,11 +60,11 @@
                 <div class="row d-flex justify-content-between">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Семейное положение</label>
-                            <select class="form-control" name="city">
+                            <label for="married">Семейное положение</label>
+                            <select class="form-control" name="married">
                                 <option value="">Выберите положение</option>
-                                <option value="1">Женат/Замужем</option>
-                                <option value="0">Не женат/Не замужем </option>
+                                <option @if(request()->married == '1') selected @endif value="1">Женат/Замужем</option>
+                                <option @if(request()->married == '0') selected @endif value="0">Не женат/Не замужем </option>
                             </select>
                         </div>
                     </div>
@@ -100,7 +99,7 @@
                         <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td><input type="checkbox"></td>
+                                <td><input name="user_ids[]" value="{{$user->id}}" type="checkbox"></td>
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name . ' ' . $user->surname}}</td>
                                 <td> {{$user->phone ?? '-'}} </td>
