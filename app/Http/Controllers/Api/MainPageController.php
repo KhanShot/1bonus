@@ -9,6 +9,7 @@ use App\Models\Categories;
 use App\Models\Cities;
 use App\Models\Favourite;
 use App\Models\Institution;
+use App\Models\InstitutionAddress;
 use App\Models\Tags;
 use App\Models\UserCards;
 use Carbon\Carbon;
@@ -27,15 +28,19 @@ class MainPageController extends Controller
     }
 
     public function getTags(){
-        $tags =  Tags::query()->with(['institution.address', 'institution' => function($query){
+
+        $cities = InstitutionAddress::query()->where('city_id', auth()->user()->city_id)->pluck('institution_id');
+
+        $tags =  Tags::query()->with(['institution.address', 'institution' => function($query) use ($cities){
             $query->withAvg('rating', 'point');
+            $query->where('is_filled', 1);
+            $query->whereIn('id', $cities);
         }])
             ->get();
 
 
         return $tags->transform(function ($item){
             $newItem = array();
-
             $newItem['id'] = $item->id;
             $newItem['name'] = $item->name;
             $newItem['image'] = $item->image;

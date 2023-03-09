@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\InstitutionService;
 use App\Http\Traits\TJsonResponse;
 use App\Models\Institution;
 use App\Models\InstitutionSchedule;
@@ -34,7 +35,7 @@ class ScheduleController extends Controller
         return $this->successResponse(null, ['schedule' => $data]);
     }
 
-    public function store(Request $request, $institution_id){
+    public function store(Request $request, $institution_id, InstitutionService $service){
         InstitutionSchedule::query()->where("institution_id", $institution_id)->delete();
 
         $data = array(
@@ -98,6 +99,13 @@ class ScheduleController extends Controller
 
         InstitutionSchedule::insert($data);
 
+        $data = $service->getRequiredFillings(auth()->user()->id);
+
+        if (count($data) < 1){
+            $institution = Institution::query()->find($institution_id);
+            $institution->is_filled = 1;
+            $institution->save();
+        }
         return $this->successResponse("ok", $data);
     }
 

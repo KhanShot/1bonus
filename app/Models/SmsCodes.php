@@ -12,4 +12,10 @@ class SmsCodes extends Model
         'code', 'phone', 'user_id','service_sms_id',
         'type', 'status','reason', 'verified', 'password'
     ];
+
+
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

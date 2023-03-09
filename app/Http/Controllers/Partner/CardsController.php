@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\InstitutionService;
 use App\Http\Traits\TJsonResponse;
 use App\Http\Traits\Utils;
 use App\Models\Cards;
@@ -35,7 +36,8 @@ class CardsController extends Controller
         return view('partner.cards.create', compact('institution'));
     }
 
-    public function store(Request $request, $institution_id){
+    public function store(Request $request, $institution_id, InstitutionService $service){
+
         $institution = Institution::query()->find($institution_id);
         if (!$institution)
             return redirect()->route("partner.institution")->with("error", Utils::$MESSAGE_DATA_NOT_FOUND);
@@ -54,6 +56,12 @@ class CardsController extends Controller
         }
         DB::commit();
 
+        $data = $service->getRequiredFillings(auth()->user()->id);
+
+        if (count($data) < 1){
+            $institution->is_filled = 1;
+            $institution->save();
+        }
 
         return $this->successResponse(null, ['cards' => $request->all()]);
     }

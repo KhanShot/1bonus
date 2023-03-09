@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\InstitutionService;
 use App\Http\Traits\TJsonResponse;
 use App\Http\Traits\Utils;
 use App\Models\Institution;
@@ -40,7 +41,7 @@ class ServiceController extends Controller
         return ServiceCategories::query()->where('institution_id', $institution_id)->get();
     }
 
-    public function store(Request $request, $institution_id){
+    public function store(Request $request, $institution_id, InstitutionService $service){
         $data = array(
             'institution_id' => $institution_id,
             'service_category_id' => $request->get('category'),
@@ -57,6 +58,13 @@ class ServiceController extends Controller
 
         Service::query()->create($data);
 
+        $data = $service->getRequiredFillings(auth()->user()->id);
+
+        if (count($data) < 1){
+            $institution = Institution::query()->find($institution_id);
+            $institution->is_filled = 1;
+            $institution->save();
+        }
         return $this->successResponse(null, [$request->all()]);
     }
 

@@ -12,7 +12,7 @@ class Institution extends Model
     protected $fillable = [
         'user_id', 'category_id', 'name', 'description',
         'insta', 'telegram', 'whatsapp', 'logo', 'image',
-        'bg_image',
+        'bg_image', 'is_filled',
     ];
     public function phones(){
         return $this->hasOne(InstitutionPhones::class, 'institution_id');
@@ -23,7 +23,7 @@ class Institution extends Model
 
     public function userCity()
     {
-        return $this->address()->where('city_id', auth()->user()->city_id)->pluck('institution_id');
+        return $this;
     }
 
     public function owner(){

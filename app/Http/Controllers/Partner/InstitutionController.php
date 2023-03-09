@@ -53,6 +53,7 @@ class InstitutionController extends Controller
             'insta' => $data['insta'] ?? '',
             'telegram' => $data['telegram'] ?? '',
             'whatsapp' => $data['whatsapp'] ?? '',
+            'is_filled' => 0,
             'user_id' => auth()->user()->id,
         );
 

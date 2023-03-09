@@ -10,6 +10,7 @@ use App\Models\Banner;
 use App\Models\Cards;
 use App\Models\Favourite;
 use App\Models\Institution;
+use App\Models\InstitutionAddress;
 use App\Models\UserCards;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -23,6 +24,7 @@ class InstitutionController extends Controller
     use TJsonResponse;
     public function detail($institution_id){
         $institution = Institution::with(['category', 'address', 'phones', 'services_category.services', 'schedule'])
+            ->where('is_filled', 1)
             ->withAvg('rating','point')->find($institution_id);
 
         if (!$institution)
@@ -49,7 +51,9 @@ class InstitutionController extends Controller
 
     public function getCards($institution_id)
     {
-        $wash = Institution::query()->find($institution_id);
+        $wash = Institution::query()
+            ->where('is_filled', 1)
+            ->find($institution_id);
         if (!$wash)
             return $this->failedResponse("Автомойка не найдена!", 404);
 
@@ -75,10 +79,12 @@ class InstitutionController extends Controller
 
     public function getList(Request $request){
 
-        $institution = Institution::with('schedule')
+        $cities = InstitutionAddress::query()->where('city_id', auth()->user()->city_id)->pluck('institution_id');
 
+        $institution = Institution::with(['schedule'])
+            ->where('is_filled', 1)
+            ->whereIn('id', $cities)
             ->withAvg('rating','point');
-
 
         if ($request->has('category_id')){
             $institution = $institution->where('category_id', $request->get('category_id'));
@@ -121,9 +127,15 @@ class InstitutionController extends Controller
 
 
         if ($request->has('used')){
-
+            $inst_list = UserCards::query()->where('user_id', auth()->user()->id)->pluck('institution_id')->unique();
+            $institution = $institution->whereIn('id', $inst_list);
         }
 
+        if ($request->has('sort')){
+            if ($request->get('sort') == 'rating'){
+                $institution = $institution->orderBy('rating_avg_point', 'Desc');
+            }
+        }
 
         return $institution->get()->transform(function ($item) use ($data){
 
@@ -177,9 +189,8 @@ class InstitutionController extends Controller
 
         $inst_list = UserCards::query()->where('user_id', auth()->user()->id)->pluck('institution_id')->unique();
 
-
-
         $institution = Institution::with('schedule')
+            ->where('is_filled', 1)
             ->whereIn('id', $inst_list)
             ->withAvg('rating','point');
 

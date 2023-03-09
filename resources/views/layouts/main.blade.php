@@ -28,6 +28,8 @@
     <script src="https://unpkg.com/imask"></script>
     @vite('resources/js/app.js')
 
+
+
 </head>
 
 <body id="page-top">
@@ -140,6 +142,7 @@
     //     document.getElementById('register=phone'), {
     //         mask: '{7}0000000000'
     //     });
+
 
 </script>
 </body>

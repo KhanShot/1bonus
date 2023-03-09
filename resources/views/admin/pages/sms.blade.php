@@ -12,26 +12,26 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>#Mobizon</th>
+                        <th>#Id sms</th>
                         <th>Номер</th>
                         <th>СМС Код</th>
-                        <th>Пользователь</th>
+                        <th>Статус</th>
                         <th>Тип</th>
                         <th>Дата</th>
                         <th>Подтвержден</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($bulks=[] as $bulk)
+                    @foreach($smsCodes as $sms)
                         <tr  >
-                            <td>{{$bulk->id}}</td>
-                            <td>{{$bulk->service_sms_id}}</td>
-                            <td>{{$bulk->phone ?? "-"}}</td>
-                            <td>{{$bulk->code}}</td>
-                            <td>{{$bulk->user->name ?? "-" }}</td>
-                            <td>{{$bulk->type}}</td>
-                            <td>{{$bulk->created_at}}</td>
-                            <td> @if($bulk->verified) <i class="text-success fas fa-check"></i> @else <i class="text-danger fa fa-times"></i> @endif </td>
+                            <td>{{$sms->id}}</td>
+                            <td>{{$sms->service_sms_id}}</td>
+                            <td>{{$sms->phone ?? "-"}}</td>
+                            <td>{{$sms->code}}</td>
+                            <td> @if($sms->status == 'not_sent')<i class="fa fa-circle text-danger"></i>@else <i class="fa fa-circle text-success"></i> @endif </td>
+                            <td>{{$sms->type}}</td>
+                            <td>{{$sms->created_at}}</td>
+                            <td> @if($sms->verified) <i class="text-success fas fa-check"></i> @else <i class="text-danger fa fa-times"></i> @endif </td>
                         </tr>
                     @endforeach
                     </tbody>

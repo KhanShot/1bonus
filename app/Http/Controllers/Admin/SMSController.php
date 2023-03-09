@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SmsCodes;
 use Illuminate\Http\Request;
 
 class SMSController extends Controller
 {
     public function index(){
-        return view('admin.pages.sms');
+        $smsCodes = SmsCodes::query()
+            ->get();
+
+        return view('admin.pages.sms', compact('smsCodes'));
     }
 }
