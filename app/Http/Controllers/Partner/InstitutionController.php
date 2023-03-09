@@ -116,6 +116,7 @@ class InstitutionController extends Controller
             'street' => $request->get("street"),
             'premiseNumber' => $request->get("premiseNumber"),
             'lat' => $request->get("lat"),
+            'city_id' => $request->get('city_id'),
             'long' => $request->get("long")
         );
 

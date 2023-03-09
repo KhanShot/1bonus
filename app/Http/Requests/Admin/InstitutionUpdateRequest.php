@@ -31,6 +31,7 @@ class InstitutionUpdateRequest extends FormRequest
             'phone' => "required",
             'full_address' => 'required',
             'lat' => 'required',
+            'city_id' => 'required',
             'city' => 'required',
             'category' => 'required',
             'long' => 'required',
