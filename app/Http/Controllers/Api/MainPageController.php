@@ -49,7 +49,7 @@ class MainPageController extends Controller
 
             $newInst = array();
             foreach ($item->institution as $institution){
-                $fav =  Favourite::query()->where('institution_id', $item->id)
+                $fav =  Favourite::query()->where('institution_id', $institution->id)
                     ->where('user_id', auth()->user()->id)->first();
 
                 $fav_has = (bool)$fav;
