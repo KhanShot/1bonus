@@ -108,10 +108,16 @@ class InstitutionController extends Controller
                     if ($schedule['dayOff'])
                         $closed_arr[] = $schedule['institution_id'];
                     else{
-                        $open = Carbon::createFromTimeString($schedule['open']);
-                        $close = Carbon::createFromTimeString($schedule['close']);
-                        if (!now()->between($open, $close))
+                        if (!is_null($schedule['open']) && !is_null($schedule['close'])){
+                            $open = Carbon::createFromTimeString($schedule['open']);
+                            $close = Carbon::createFromTimeString($schedule['close']);
+                            if (!now()->between($open, $close))
+                                $closed_arr[] = $schedule['institution_id'];
+                        }else{
                             $closed_arr[] = $schedule['institution_id'];
+                        }
+
+
                     }
                 }
             }
@@ -140,16 +146,21 @@ class InstitutionController extends Controller
         return $institution->get()->transform(function ($item) use ($data){
 
             foreach ($data as $schedule){
-                if ($schedule['institution_id'] == $item->id){
-                    $item->new_schedule = $schedule;
-                    if ($schedule['dayOff'])
-                        $item->open = false;
-                    else{
-                        $open = Carbon::createFromTimeString($schedule['open']);
-                        $close = Carbon::createFromTimeString($schedule['close']);
-                        $item->open = now()->between($open, $close);
+
+                    if ($schedule['institution_id'] == $item->id){
+                        $item->new_schedule = $schedule;
+                        if ($schedule['dayOff'])
+                            $item->open = false;
+                        else{
+                            if (!is_null($schedule['open']) && !is_null($schedule['close'])){
+                                $open = Carbon::createFromTimeString($schedule['open']);
+                                $close = Carbon::createFromTimeString($schedule['close']);
+                                $item->open = now()->between($open, $close);
+                            }else{
+                                $item->open == false;
+                            }
+                        }
                     }
-                }
             }
 
             $fav =  Favourite::query()->where('institution_id', $item->id)
@@ -163,10 +174,11 @@ class InstitutionController extends Controller
                 'full_address' => $item->address->street .' '.$item->address->premiseNumber ?? '',
                 'image' => $item->image,
                 'rating' => round($item->rating_avg_point, 2),
-                'open' => $item->open,
+//                'open' => $item->open,
                 'lat' => $item->address->lat ?? null,
                 'long' => $item->address->long ?? null,
                 'favourite_has' => $fav_has,
+//                'new_schedule' => $item->new_schedule,
                 'user_cards' => UserCards::query()
 
                     ->where('is_finished', '=',false)
