@@ -34,10 +34,11 @@ class MainPageController extends Controller
         $tags =  Tags::query()->with(['institution.address', 'institution' => function($query) use ($cities){
             $query->withAvg('rating', 'point');
             $query->where('is_filled', 1);
-            $query->whereIn('id', $cities);
+            $query->whereIn('institution_id', $cities);
         }])
             ->get();
 
+//        return $tags;
 
         return $tags->transform(function ($item){
             $newItem = array();

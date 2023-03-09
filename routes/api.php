@@ -28,6 +28,10 @@ Route::prefix('auth')->group(function (){
     Route::post('send-sms', [\App\Http\Controllers\Api\AuthController::class, 'send']);
     Route::post('verify', [\App\Http\Controllers\Api\AuthController::class, 'verify']);
 
+    Route::post('check-phone', [\App\Http\Controllers\Api\PasswordController::class, 'check']);
+    Route::post('password/verify', [\App\Http\Controllers\Api\PasswordController::class, 'verify']);
+    Route::post('password/reset', [\App\Http\Controllers\Api\PasswordController::class, 'reset']);
+
 });
 
 Route::middleware(['auth:sanctum'])->group(function (){
@@ -55,6 +59,7 @@ Route::middleware(['auth:sanctum'])->group(function (){
     Route::prefix('user')->group(function (){
         Route::get('get-profile', [\App\Http\Controllers\Api\UserController::class, 'getProfile']);
         Route::post('update', [\App\Http\Controllers\Api\UserController::class, 'update']);
+        Route::post('delete', [\App\Http\Controllers\Api\UserController::class, 'delete']);
         Route::get('get-city', [\App\Http\Controllers\Api\UserController::class, 'getCity']);
 
 

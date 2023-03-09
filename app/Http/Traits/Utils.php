@@ -67,6 +67,7 @@ class Utils
     public static string $MESSAGE_VERIFY_PHONE = "Пожалуйста, подтвердите номер";
     public static string $MESSAGE_VERIFY_PHONE_SEND = "Код для подтверждение номера, отправлано на ваш номер!";
     public static string $MESSAGE_WRONG_SMS_CODE = "Вы ввели неправильный код!";
+    public static string $MESSAGE_USED_SMS_CODE = "Код уже использован!";
     public static string $MESSAGE_PHONE_VERIFIED_ALREADY = "Ваш номер уже подтвержден, попробуйте войти!";
     public static string $MESSAGE_PHONE_VERIFIED = "Ваш номер успешно подтвержден!";
     public static string $MESSAGE_EMAIL_NOT_FOUND = "Указанная почта не найдена в нашем базе данных!";
