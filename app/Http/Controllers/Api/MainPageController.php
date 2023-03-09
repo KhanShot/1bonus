@@ -46,13 +46,13 @@ class MainPageController extends Controller
             $newItem['name'] = $item->name;
             $newItem['image'] = $item->image;
             $newItem['order'] = $item->order;
-            $fav =  Favourite::query()->where('institution_id', $item->id)
-                ->where('user_id', auth()->user()->id)->first();
-
-            $fav_has = (bool)$fav;
 
             $newInst = array();
             foreach ($item->institution as $institution){
+                $fav =  Favourite::query()->where('institution_id', $item->id)
+                    ->where('user_id', auth()->user()->id)->first();
+
+                $fav_has = (bool)$fav;
                 $inst = array();
                 $inst['id'] = $institution->id;
                 $inst['name'] = $institution->name;
