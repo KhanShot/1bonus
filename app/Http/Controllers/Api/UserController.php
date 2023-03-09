@@ -41,8 +41,10 @@ class UserController extends Controller
         UsersFcmToken::query()->where('user_id', auth()->user()->id)->delete();
         Favourite::query()->where('user_id', auth()->user()->id)->delete();
         $user = User::query()->find(auth()->user()->id);
-        $user->notifcations()->delete();
+        $user->notifications()->delete();
         $user->delete();
+
+        return $this->successResponse(Utils::$MESSAGE_COURSE_UPLOADED_SUCCESS);
     }
 
 }
