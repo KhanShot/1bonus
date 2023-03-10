@@ -48,7 +48,6 @@ class QrController extends Controller
             }
             DB::commit();
 
-//            return 'first';
         }else{ // if user has cards
             $current_visit = null;
             foreach ($userCards->get()->sortBy('visit') as $card ){
@@ -85,7 +84,7 @@ class QrController extends Controller
 
 //            return 'second';
         }
-        //TODO push notification
+
         $data['header'] = 'Оцените заведение!';
         $data['text'] = "Понравилось ли вам это заведение?";
         $data['fcm_tokens'] = [User::with('fcm')->find($request->get('user_id'))->fcm->token];
@@ -93,6 +92,7 @@ class QrController extends Controller
             'institution_id' => $institution->id,
             'user_id' => $request->get('user_id')
         );
+        $this->sendNotification($data);
         return $this->successResponse("qr postavlen uspewno!");
     }
 }
